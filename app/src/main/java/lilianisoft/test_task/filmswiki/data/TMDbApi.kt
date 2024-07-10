@@ -1,4 +1,4 @@
-package lilianisoft.test_task.filmswiki
+package lilianisoft.test_task.filmswiki.data
 
 import lilianisoft.test_task.filmswiki.model.Movie
 import lilianisoft.test_task.filmswiki.model.MovieResponse

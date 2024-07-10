@@ -1,16 +1,15 @@
-package lilianisoft.test_task.filmswiki
+package lilianisoft.test_task.filmswiki.host
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import coil.load
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlinx.coroutines.launch
+import lilianisoft.test_task.filmswiki.RetrofitInstance
 import lilianisoft.test_task.filmswiki.databinding.ActivityHostBinding
 import lilianisoft.test_task.filmswiki.model.Movie
 import lilianisoft.test_task.filmswiki.model.MovieResponse
@@ -78,7 +77,7 @@ class HostActivity : AppCompatActivity() {
                     // Обработка списка фильмов, например, обновление UI
                     binding.textView5.text = movie?.title
                     binding.textView6.text = movie?.overview
-                    binding.textView7.text = movie?.poster_path
+                    binding.textView7.text = movie?.release_date
                     binding.textView8.text = movie?.id.toString()
 
                     val posterUrl = getFullPosterUrl(movie!!.poster_path)

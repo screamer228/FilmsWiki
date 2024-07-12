@@ -27,11 +27,17 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMovieById(id: Int): MovieDto {
-        val response = moviesApi.getMovieById(id)
+    override suspend fun getMovieById(id: Int): Flow<MovieDto> = flow {
+        val response: Response<MovieDto> = moviesApi.getMovieById(id)
         if (response.isSuccessful) {
-            return response.body()!!
+            val body = response.body()
+            if (body != null) {
+                emit(body)
+            } else {
+                throw IllegalStateException("Response body is null")
+            }
+        } else {
+            throw Exception("API call failed with response code ${response.code()}")
         }
-        return response.body()!!
     }
 }

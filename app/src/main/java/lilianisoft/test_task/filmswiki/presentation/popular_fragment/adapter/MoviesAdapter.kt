@@ -8,7 +8,8 @@ import lilianisoft.test_task.filmswiki.databinding.ItemMovieBinding
 import lilianisoft.test_task.filmswiki.presentation.model.Movie
 
 class MoviesAdapter(
-    private var movieDtoList: List<Movie> = listOf()
+    private var movieDtoList: List<Movie> = listOf(),
+    private val onMovieClick: (Movie) -> Unit
 ) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
 //    private var movieList: List<Movie> = listOf()
@@ -19,7 +20,10 @@ class MoviesAdapter(
         fun bind(item: Movie) {
             binding.movieImage.load(item.posterUrl)
             binding.movieTitle.text = item.title
-            binding.movieReleaseDate.text = item.releaseDate
+            binding.movieReleaseDate.text = item.releaseYear
+            binding.movieContainer.setOnClickListener {
+                onMovieClick(item)
+            }
         }
     }
 

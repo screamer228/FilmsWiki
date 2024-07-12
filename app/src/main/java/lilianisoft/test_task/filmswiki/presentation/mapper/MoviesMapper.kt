@@ -23,7 +23,7 @@ class MoviesMapper {
         return Movie(
             id = entity.id,
             title = entity.title,
-            releaseDate = StringUtils.getYearFromDate(entity.releaseDate),
+            releaseYear = StringUtils.getYearFromDate(entity.releaseDate),
             overview = entity.overview,
             posterUrl = StringUtils.getFullPosterUrl(entity.posterPath)
         )

@@ -8,6 +8,6 @@ interface MoviesRepository {
 
     suspend fun getPopularMoviesByPage(page: Int) : Flow<MoviesPageDto>
 
-    suspend fun getMovieById(id: Int) : MovieDto
+    suspend fun getMovieById(id: Int) : Flow<MovieDto>
 
 }

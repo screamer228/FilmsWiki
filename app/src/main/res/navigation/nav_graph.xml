@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_popular_movies" />
     <fragment
         android:id="@+id/favoriteMoviesFragment"
-        android:name="lilianisoft.test_task.filmswiki.presentation.FavoriteMoviesFragment"
+        android:name="lilianisoft.test_task.filmswiki.presentation.favorites_fragment.FavoriteMoviesFragment"
         android:label="FavoriteMoviesFragment" />
     <fragment
         android:id="@+id/searchMoviesFragment"
-        android:name="lilianisoft.test_task.filmswiki.presentation.SearchMoviesFragment"
+        android:name="lilianisoft.test_task.filmswiki.presentation.search_fragment.SearchMoviesFragment"
         android:label="SearchMoviesFragment" />
 </navigation>

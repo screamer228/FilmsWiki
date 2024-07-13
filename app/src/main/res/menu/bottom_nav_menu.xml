@@ -3,13 +3,16 @@
     <item
         android:id="@+id/popularMoviesFragment"
         android:enabled="true"
+        android:icon="@drawable/ic_fire"
         android:title="Популярные" />
     <item
         android:id="@+id/favoriteMoviesFragment"
         android:enabled="true"
+        android:icon="@drawable/ic_hearth"
         android:title="Избранное" />
     <item
         android:id="@+id/searchMoviesFragment"
         android:enabled="true"
+        android:icon="@drawable/ic_search"
         android:title="Поиск" />
 </menu>

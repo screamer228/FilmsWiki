@@ -37,17 +37,24 @@ class DetailMovieViewModel @Inject constructor(
 
     fun getMovieById(movieId: Int) {
         viewModelScope.launch {
-            getDetailMovieUseCase.execute(movieId)
-                .flowOn(Dispatchers.IO)
-                .map { moviesMapper.mapDtoToUi(it) }
-                .catch { e ->
-                    handleNetworkError(e)
-                }
-                .collect { mappedMoviePage ->
-                    _uiState.value = _uiState.value.copy(
-                        movie = mappedMoviePage
-                    )
-                }
+            try {
+                turnLoading(true)
+                getDetailMovieUseCase.execute(movieId)
+                    .flowOn(Dispatchers.IO)
+                    .map { moviesMapper.mapDtoToUi(it) }
+                    .catch { e ->
+                        handleNetworkError(e)
+                    }
+                    .collect { mappedMoviePage ->
+                        _uiState.value = _uiState.value.copy(
+                            movie = mappedMoviePage
+                        )
+                    }
+            } catch (e: Throwable) {
+                handleNetworkError(e)
+            } finally {
+                turnLoading(false)
+            }
         }
     }
 
@@ -59,13 +66,13 @@ class DetailMovieViewModel @Inject constructor(
         }
     }
 
+    private suspend fun turnLoading(state: Boolean) {
+        _uiState.emit(_uiState.value.copy(isLoading = state))
+    }
+
     fun onBackClicked() {
         viewModelScope.launch {
             _navigationEvents.emit(NavigationEvent.Back())
         }
     }
-
-//    fun setNavigationState(event: CountrySelectedNavigationEvent) {
-//        _uiState.value = _uiState.value.copy(navigation = event)
-//    }
 }

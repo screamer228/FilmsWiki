@@ -2,17 +2,18 @@ package lilianisoft.test_task.filmswiki.presentation.popular_fragment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import lilianisoft.test_task.filmswiki.databinding.ItemMovieBinding
 import lilianisoft.test_task.filmswiki.presentation.model.Movie
+import lilianisoft.test_task.filmswiki.presentation.utils.MoviesDiffUtil
 
 class MoviesAdapter(
-    private var movieDtoList: List<Movie> = listOf(),
     private val onMovieClick: (Movie) -> Unit
 ) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-//    private var movieList: List<Movie> = listOf()
+    private var movieList: List<Movie> = listOf()
 
     inner class ViewHolder(
         private val binding: ItemMovieBinding
@@ -34,18 +35,18 @@ class MoviesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = movieDtoList[position]
+        val item = movieList[position]
         holder.bind(item)
     }
 
     override fun getItemCount(): Int {
-        return movieDtoList.size
+        return movieList.size
     }
 
-//    fun updateList(newDataList: List<Movie>) {
-//        val diffUtil = MoviesDiffUtil(offersList, newDataList)
-//        val diffResult = DiffUtil.calculateDiff(diffUtil)
-//        offersList = newDataList
-//        diffResult.dispatchUpdatesTo(this)
-//    }
+    fun updateList(newDataList: List<Movie>) {
+        val diffUtil = MoviesDiffUtil(movieList, newDataList)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        movieList = newDataList
+        diffResult.dispatchUpdatesTo(this)
+    }
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import lilianisoft.test_task.filmswiki.R
 import lilianisoft.test_task.filmswiki.app.App
 import lilianisoft.test_task.filmswiki.databinding.FragmentPopularMoviesBinding
 import lilianisoft.test_task.filmswiki.presentation.navigation.NavigationEvent
@@ -17,6 +18,7 @@ import lilianisoft.test_task.filmswiki.presentation.popular_fragment.adapter.Mov
 import lilianisoft.test_task.filmswiki.presentation.popular_fragment.uievent.PopularUiEvent
 import lilianisoft.test_task.filmswiki.presentation.popular_fragment.viewmodel.PopularMoviesViewModel
 import lilianisoft.test_task.filmswiki.presentation.popular_fragment.viewmodel.PopularMoviesViewModelFactory
+import lilianisoft.test_task.filmswiki.presentation.utils.NoAnimationItemAnimator
 import javax.inject.Inject
 
 class PopularMoviesFragment : Fragment() {
@@ -44,10 +46,22 @@ class PopularMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesAdapter() {}
+        adapter = MoviesAdapter {
+            viewModel.onMovieClicked(it.id)
+        }
+        binding.recyclerViewPopularMovies.adapter = adapter
 
-        // Подписка на события UI
-        lifecycleScope.launch {
+        //отключение анимации у recyclerView, так как стандартная анимация diffUtil создавала
+        //мерцание при переключении страницы
+        binding.recyclerViewPopularMovies.itemAnimator = NoAnimationItemAnimator()
+
+        clickListeners()
+
+        observers()
+    }
+
+    private fun observers() {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.events.collect { event ->
                 when (event) {
                     is PopularUiEvent.ShowToast -> {
@@ -59,11 +73,22 @@ class PopularMoviesFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { uiState ->
-                adapter = MoviesAdapter(uiState.movieList) {
-                    viewModel.onMovieClicked(it.id)
+
+                adapter.updateList(uiState.movieList)
+
+                when (uiState.isLoading) {
+                    true -> {
+                        binding.recyclerViewPopularMovies.visibility = View.GONE
+                        binding.popularLoading.visibility = View.VISIBLE
+                    }
+
+                    false -> {
+                        binding.popularLoading.visibility = View.GONE
+                        binding.recyclerViewPopularMovies.visibility = View.VISIBLE
+                        binding.popularPage.text =
+                            getString(R.string.page_number, uiState.page.toString())
+                    }
                 }
-                binding.recyclerViewPopularMovies.adapter = adapter
-                adapter.notifyDataSetChanged()
             }
         }
 
@@ -81,6 +106,16 @@ class PopularMoviesFragment : Fragment() {
                     else -> {}
                 }
             }
+        }
+    }
+
+    private fun clickListeners() {
+        binding.popularPreviousPage.setOnClickListener {
+            viewModel.onPreviousPageClicked()
+        }
+
+        binding.popularNextPage.setOnClickListener {
+            viewModel.onNextPageClicked()
         }
     }
 

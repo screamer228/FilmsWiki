@@ -50,7 +50,20 @@ class DetailMovieFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { uiState ->
+
                 setContent(uiState.movie)
+
+                when (uiState.isLoading) {
+                    true -> {
+                        binding.detailContentContainer.visibility = View.GONE
+                        binding.detailLoading.visibility = View.VISIBLE
+                    }
+
+                    false -> {
+                        binding.detailLoading.visibility = View.GONE
+                        binding.detailContentContainer.visibility = View.VISIBLE
+                    }
+                }
             }
         }
 

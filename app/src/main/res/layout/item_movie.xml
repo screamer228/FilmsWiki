@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/movie_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:background="@color/hard_blue"
+    android:paddingHorizontal="12dp"
+    android:paddingBottom="12dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/movie_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="150dp"
-        android:minHeight="200dp" />
+        android:minHeight="200dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/movie_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Title" />
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="4dp"
+        android:text="Title"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/movie_image"
+        app:layout_constraintStart_toStartOf="@+id/movie_image"
+        app:layout_constraintTop_toBottomOf="@+id/movie_image" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/movie_releaseDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="2024-06-11" />
+        android:layout_marginStart="2dp"
+        android:text="2024"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/movie_image"
+        app:layout_constraintStart_toStartOf="@+id/movie_image"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

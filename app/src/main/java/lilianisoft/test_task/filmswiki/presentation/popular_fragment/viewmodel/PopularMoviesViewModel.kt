@@ -36,23 +36,27 @@ class PopularMoviesViewModel @Inject constructor(
     val navigationEvents = _navigationEvents.asSharedFlow()
 
     init {
-        getMoviesPage()
+        getMoviesPage(_uiState.value.page)
     }
 
-    private fun getMoviesPage() {
+    private fun getMoviesPage(page: Int) {
         viewModelScope.launch {
-            getPopularMoviesPageUseCase.execute(1)
-                .flowOn(Dispatchers.IO)
-                .map { moviesMapper.mapDtoToUiPage(it) }
-                .catch { e ->
-                    handleNetworkError(e)
-                }
-                .collect { mappedMoviePage ->
-                    _uiState.value = _uiState.value.copy(
-                        movieList = mappedMoviePage.movieList,
-                        page = mappedMoviePage.page
-                    )
-                }
+            try {
+                turnLoading(true)
+                getPopularMoviesPageUseCase.execute(page)
+                    .map { moviesPage -> moviesMapper.mapDtoToUiPage(moviesPage) }
+                    .collect { mappedMoviePage ->
+                        _uiState.value = _uiState.value.copy(
+                            movieList = mappedMoviePage.movieList,
+                            page = mappedMoviePage.page,
+                            totalPages = mappedMoviePage.totalPages,
+                        )
+                    }
+            } catch (e: Throwable) {
+                handleNetworkError(e)
+            } finally {
+                turnLoading(false)
+            }
         }
     }
 
@@ -64,13 +68,37 @@ class PopularMoviesViewModel @Inject constructor(
         }
     }
 
-    fun onMovieClicked(movieId: Int) {
+    private suspend fun turnLoading(state: Boolean) {
+        _uiState.emit(_uiState.value.copy(isLoading = state))
+    }
+
+    fun onNextPageClicked() {
         viewModelScope.launch {
-            _navigationEvents.emit(NavigationEvent.ToMovieDetail(movieId))
+            if (_uiState.value.page < _uiState.value.totalPages) {
+                getMoviesPage(_uiState.value.page + AMOUNT_OF_PAGE_CHANGE)
+            } else {
+                _events.emit(PopularUiEvent.ShowToast("You are on the last page!"))
+            }
         }
     }
 
-//    fun setNavigationState(event: CountrySelectedNavigationEvent) {
-//        _uiState.value = _uiState.value.copy(navigation = event)
-//    }
+    fun onPreviousPageClicked() {
+        viewModelScope.launch {
+            if (_uiState.value.page > MIN_PAGE) {
+                getMoviesPage(_uiState.value.page - AMOUNT_OF_PAGE_CHANGE)
+            } else {
+                _events.emit(PopularUiEvent.ShowToast("You are on the first page!"))
+            }
+        }
+    }
+
+    fun onMovieClicked(movieId: Int) {
+        viewModelScope.launch {
+            _navigationEvents.emit(NavigationEvent.ToMovieDetail(movieId))
+
+        }
+    }
 }
+
+private const val AMOUNT_OF_PAGE_CHANGE = 1
+private const val MIN_PAGE = 1

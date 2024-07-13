@@ -7,7 +7,7 @@ import lilianisoft.test_task.filmswiki.presentation.favorites_fragment.FavoriteM
 import lilianisoft.test_task.filmswiki.presentation.popular_fragment.PopularMoviesFragment
 import lilianisoft.test_task.filmswiki.presentation.search_fragment.SearchMoviesFragment
 
-@Component(modules = [AppModule::class, DataModule::class])
+@Component(modules = [AppModule::class, DomainModule::class, DataModule::class])
 interface AppComponent {
 
     fun injectHostActivity(hostActivity: HostActivity)

@@ -3,8 +3,9 @@ package lilianisoft.test_task.filmswiki.di
 import dagger.Module
 import dagger.Provides
 import lilianisoft.test_task.filmswiki.BuildConfig
+import lilianisoft.test_task.filmswiki.data.mapper.MoviesEntityMapper
 import lilianisoft.test_task.filmswiki.data.network.MoviesApi
-import lilianisoft.test_task.filmswiki.data.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
 import lilianisoft.test_task.filmswiki.data.repository.MoviesRepositoryImpl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -15,8 +16,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 class DataModule {
 
     @Provides
-    fun provideMoviesRepository(moviesApi: MoviesApi): MoviesRepository {
-        return MoviesRepositoryImpl(moviesApi)
+    fun provideMoviesRepository(
+        moviesApi: MoviesApi
+    ): MoviesRepository {
+        return MoviesRepositoryImpl(
+            moviesApi,
+            moviesEntityMapper = MoviesEntityMapper()
+        )
     }
 
     @Provides

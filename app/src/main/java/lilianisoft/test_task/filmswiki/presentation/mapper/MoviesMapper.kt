@@ -1,14 +1,14 @@
 package lilianisoft.test_task.filmswiki.presentation.mapper
 
-import lilianisoft.test_task.filmswiki.data.dto.MovieDto
-import lilianisoft.test_task.filmswiki.data.dto.MoviesPageDto
+import lilianisoft.test_task.filmswiki.domain.entity.MovieEntity
+import lilianisoft.test_task.filmswiki.domain.entity.MoviesPageEntity
 import lilianisoft.test_task.filmswiki.presentation.model.Movie
 import lilianisoft.test_task.filmswiki.presentation.model.MoviesPage
 import lilianisoft.test_task.filmswiki.presentation.utils.StringUtils
 
 class MoviesMapper {
 
-    fun mapDtoToUiPage(entity: MoviesPageDto): MoviesPage {
+    fun mapDtoToUiPage(entity: MoviesPageEntity): MoviesPage {
         return MoviesPage(
             page = entity.page,
             movieList = entity.movieList.map{
@@ -19,7 +19,7 @@ class MoviesMapper {
         )
     }
 
-    fun mapDtoToUi(entity: MovieDto): Movie {
+    fun mapDtoToUi(entity: MovieEntity): Movie {
         return Movie(
             id = entity.id,
             title = entity.title,

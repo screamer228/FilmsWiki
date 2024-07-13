@@ -2,11 +2,12 @@ package lilianisoft.test_task.filmswiki.presentation.detail_fragment.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import lilianisoft.test_task.filmswiki.data.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMovieUseCase
 import lilianisoft.test_task.filmswiki.presentation.mapper.MoviesMapper
 
 class DetailMovieViewModelFactory(
-    private val moviesRepository: MoviesRepository,
+    private val getDetailMovieUseCase: GetDetailMovieUseCase,
     private val moviesMapper: MoviesMapper
 ) : ViewModelProvider.Factory {
 
@@ -14,7 +15,7 @@ class DetailMovieViewModelFactory(
         if (modelClass.isAssignableFrom(DetailMovieViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return DetailMovieViewModel(
-                moviesRepository,
+                getDetailMovieUseCase,
                 moviesMapper
             ) as T
         }

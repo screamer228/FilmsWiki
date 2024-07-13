@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import lilianisoft.test_task.filmswiki.data.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.usecase.getpopularmovies.GetPopularMoviesPageUseCase
 import lilianisoft.test_task.filmswiki.presentation.mapper.MoviesMapper
 import lilianisoft.test_task.filmswiki.presentation.navigation.NavigationEvent
 import lilianisoft.test_task.filmswiki.presentation.popular_fragment.uievent.PopularUiEvent
@@ -21,7 +22,7 @@ import java.net.ConnectException
 import javax.inject.Inject
 
 class PopularMoviesViewModel @Inject constructor(
-    private val moviesRepository: MoviesRepository,
+    private val getPopularMoviesPageUseCase: GetPopularMoviesPageUseCase,
     private val moviesMapper: MoviesMapper
 ) : ViewModel() {
 
@@ -40,7 +41,7 @@ class PopularMoviesViewModel @Inject constructor(
 
     private fun getMoviesPage() {
         viewModelScope.launch {
-            moviesRepository.getPopularMoviesByPage(1)
+            getPopularMoviesPageUseCase.execute(1)
                 .flowOn(Dispatchers.IO)
                 .map { moviesMapper.mapDtoToUiPage(it) }
                 .catch { e ->

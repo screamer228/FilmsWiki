@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import lilianisoft.test_task.filmswiki.data.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
+import lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMovieUseCase
 import lilianisoft.test_task.filmswiki.presentation.detail_fragment.uievent.DetailUiEvent
 import lilianisoft.test_task.filmswiki.presentation.detail_fragment.uistate.DetailUiState
 import lilianisoft.test_task.filmswiki.presentation.mapper.MoviesMapper
 import lilianisoft.test_task.filmswiki.presentation.navigation.NavigationEvent
-import lilianisoft.test_task.filmswiki.presentation.popular_fragment.uistate.PopularUiState
 import java.net.ConnectException
 import javax.inject.Inject
 
 class DetailMovieViewModel @Inject constructor(
-    private val moviesRepository: MoviesRepository,
+    private val getDetailMovieUseCase: GetDetailMovieUseCase,
     private val moviesMapper: MoviesMapper
 ) : ViewModel() {
 
@@ -37,7 +37,7 @@ class DetailMovieViewModel @Inject constructor(
 
     fun getMovieById(movieId: Int) {
         viewModelScope.launch {
-            moviesRepository.getMovieById(movieId)
+            getDetailMovieUseCase.execute(movieId)
                 .flowOn(Dispatchers.IO)
                 .map { moviesMapper.mapDtoToUi(it) }
                 .catch { e ->

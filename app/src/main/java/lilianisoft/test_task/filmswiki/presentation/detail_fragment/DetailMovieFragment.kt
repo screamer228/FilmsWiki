@@ -48,6 +48,12 @@ class DetailMovieFragment : Fragment() {
 
         viewModel.getMovieById(args.movieId)
 
+        clickListeners()
+
+        observers()
+    }
+
+    private fun observers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { uiState ->
 
@@ -67,7 +73,6 @@ class DetailMovieFragment : Fragment() {
             }
         }
 
-        // Подписка на события UI
         lifecycleScope.launch {
             viewModel.events.collect { event ->
                 when (event) {
@@ -96,6 +101,12 @@ class DetailMovieFragment : Fragment() {
         binding.detailTitle.text = movie.title
         binding.detailReleaseYear.text = movie.releaseYear
         binding.detailOverview.text = movie.overview
+    }
+
+    private fun clickListeners() {
+        binding.detailBack.setOnClickListener {
+            viewModel.onBackClicked()
+        }
     }
 
     private fun injectViewModel() {

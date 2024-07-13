@@ -6,15 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/hard_blue"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
     tools:context=".presentation.popular_fragment.PopularMoviesFragment">
+
+    <View
+        android:id="@+id/popular_titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/popular_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:text="Popular movies"
         android:textColor="@color/white"
         android:textSize="26sp"
@@ -28,17 +35,16 @@
         app:layout_constraintBottom_toTopOf="@+id/popular_pageBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popular_title">
+        app:layout_constraintTop_toBottomOf="@+id/popular_titleBar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_popularMovies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingVertical="12dp"
+            android:paddingTop="24dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/item_movie" />
@@ -54,7 +60,7 @@
     <View
         android:id="@+id/popular_pageBar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="54dp"
         android:background="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,8 +98,8 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/popular_pageBar"
-        app:layout_constraintStart_toStartOf="@+id/popular_pageBar"
         app:layout_constraintEnd_toEndOf="@+id/popular_pageBar"
+        app:layout_constraintStart_toStartOf="@+id/popular_pageBar"
         app:layout_constraintTop_toTopOf="@+id/popular_pageBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

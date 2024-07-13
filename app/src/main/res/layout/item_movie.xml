@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/hard_blue"
     android:paddingHorizontal="12dp"
-    android:paddingBottom="12dp">
+    android:paddingBottom="24dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/movie_image"

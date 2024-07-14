@@ -20,7 +20,7 @@ import java.net.ConnectException
 import javax.inject.Inject
 
 class DetailMovieViewModel @Inject constructor(
-    private val getDetailMovieUseCase: GetDetailMovieUseCase,
+    private val getDetailMovieUseCase: lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMovieUseCase,
     private val moviesMapper: MoviesMapper
 ) : ViewModel() {
 

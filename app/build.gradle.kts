@@ -54,6 +54,10 @@ android {
 
 dependencies {
 
+    //modules
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     //coil
     implementation("io.coil-kt:coil:2.6.0")
 

@@ -6,7 +6,7 @@ import lilianisoft.test_task.filmswiki.domain.usecase.getpopularmovies.GetPopula
 import lilianisoft.test_task.filmswiki.presentation.mapper.MoviesMapper
 
 class PopularMoviesViewModelFactory(
-    private val getPopularMoviesPageUseCase: GetPopularMoviesPageUseCase,
+    private val getPopularMoviesPageUseCase: lilianisoft.test_task.filmswiki.domain.usecase.getpopularmovies.GetPopularMoviesPageUseCase,
     private val moviesMapper: MoviesMapper
 ) : ViewModelProvider.Factory {
 

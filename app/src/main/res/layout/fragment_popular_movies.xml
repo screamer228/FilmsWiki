@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            app:trackColor="@color/white" />
+            app:indicatorColor="@color/white" />
     </FrameLayout>
 
     <View

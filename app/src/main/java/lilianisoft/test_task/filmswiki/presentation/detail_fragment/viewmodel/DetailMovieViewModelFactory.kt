@@ -6,7 +6,7 @@ import lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMo
 import lilianisoft.test_task.filmswiki.presentation.mapper.MoviesMapper
 
 class DetailMovieViewModelFactory(
-    private val getDetailMovieUseCase: GetDetailMovieUseCase,
+    private val getDetailMovieUseCase: lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMovieUseCase,
     private val moviesMapper: MoviesMapper
 ) : ViewModelProvider.Factory {
 

@@ -110,11 +110,11 @@ class PopularMoviesFragment : Fragment() {
     }
 
     private fun clickListeners() {
-        binding.popularPreviousPage.setOnClickListener {
+        binding.popularPreviousPageContainer.setOnClickListener {
             viewModel.onPreviousPageClicked()
         }
 
-        binding.popularNextPage.setOnClickListener {
+        binding.popularNextPageContainer.setOnClickListener {
             viewModel.onNextPageClicked()
         }
     }

@@ -8,11 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
 import lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMovieUseCase
 import lilianisoft.test_task.filmswiki.presentation.detail_fragment.uievent.DetailUiEvent
 import lilianisoft.test_task.filmswiki.presentation.detail_fragment.uistate.DetailUiState
@@ -42,9 +40,6 @@ class DetailMovieViewModel @Inject constructor(
                 getDetailMovieUseCase.execute(movieId)
                     .flowOn(Dispatchers.IO)
                     .map { moviesMapper.mapDtoToUi(it) }
-                    .catch { e ->
-                        handleNetworkError(e)
-                    }
                     .collect { mappedMoviePage ->
                         _uiState.value = _uiState.value.copy(
                             movie = mappedMoviePage

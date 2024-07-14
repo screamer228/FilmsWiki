@@ -6,8 +6,7 @@ import lilianisoft.test_task.filmswiki.domain.entity.MoviesPageEntity
 
 interface MoviesRepository {
 
-    suspend fun getPopularMoviesByPage(page: Int) : Flow<MoviesPageEntity>
+    suspend fun getPopularMoviesByPage(page: Int): Flow<MoviesPageEntity>
 
-    suspend fun getMovieById(id: Int) : Flow<MovieEntity>
-
+    suspend fun getMovieById(id: Int): Flow<MovieEntity>
 }

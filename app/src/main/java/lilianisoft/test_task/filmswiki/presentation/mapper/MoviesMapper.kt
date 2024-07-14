@@ -11,7 +11,7 @@ class MoviesMapper {
     fun mapDtoToUiPage(entity: MoviesPageEntity): MoviesPage {
         return MoviesPage(
             page = entity.page,
-            movieList = entity.movieList.map{
+            movieList = entity.movieList.map {
                 mapDtoToUi(it)
             },
             totalPages = entity.totalPages,

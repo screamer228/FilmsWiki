@@ -104,7 +104,7 @@ class DetailMovieFragment : Fragment() {
     }
 
     private fun clickListeners() {
-        binding.detailBack.setOnClickListener {
+        binding.detailBackContainer.setOnClickListener {
             viewModel.onBackClicked()
         }
     }

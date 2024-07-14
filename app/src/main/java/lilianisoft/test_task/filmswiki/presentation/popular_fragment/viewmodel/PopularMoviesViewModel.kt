@@ -8,11 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
 import lilianisoft.test_task.filmswiki.domain.usecase.getpopularmovies.GetPopularMoviesPageUseCase
 import lilianisoft.test_task.filmswiki.presentation.mapper.MoviesMapper
 import lilianisoft.test_task.filmswiki.presentation.navigation.NavigationEvent
@@ -44,6 +42,7 @@ class PopularMoviesViewModel @Inject constructor(
             try {
                 turnLoading(true)
                 getPopularMoviesPageUseCase.execute(page)
+                    .flowOn(Dispatchers.IO)
                     .map { moviesPage -> moviesMapper.mapDtoToUiPage(moviesPage) }
                     .collect { mappedMoviePage ->
                         _uiState.value = _uiState.value.copy(
@@ -95,7 +94,6 @@ class PopularMoviesViewModel @Inject constructor(
     fun onMovieClicked(movieId: Int) {
         viewModelScope.launch {
             _navigationEvents.emit(NavigationEvent.ToMovieDetail(movieId))
-
         }
     }
 }

@@ -2,7 +2,6 @@ package lilianisoft.test_task.filmswiki.di
 
 import dagger.Module
 import dagger.Provides
-import lilianisoft.test_task.filmswiki.domain.repository.MoviesRepository
 import lilianisoft.test_task.filmswiki.domain.usecase.getdetailmovie.GetDetailMovieUseCase
 import lilianisoft.test_task.filmswiki.domain.usecase.getpopularmovies.GetPopularMoviesPageUseCase
 import lilianisoft.test_task.filmswiki.presentation.detail_fragment.viewmodel.DetailMovieViewModelFactory

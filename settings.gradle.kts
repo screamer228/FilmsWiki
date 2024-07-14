@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "FilmsWiki"
 include(":app")
- 
+include(":data")
+include(":domain")
